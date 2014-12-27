@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>OnlineNotes - A Simple Todo Application</title>
+        <link rel="stylesheet" href="styles/bootstrap.min.css">
+        <link rel="stylesheet" href="styles/style.css"/>
+        <!-- Load javascript files -->
+        <script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+        <script type="text/javascript" src="scripts/angular.min.js"></script>
+        <script type="text/javascript" src="scripts/angular-resource.min.js"></script>
+        <script type="text/javascript" src="scripts/firebase.js"></script>
+        <script type="text/javascript" src="scripts/angularfire.min.js"></script>
+        <script src="scripts/app.js"></script>
+    </head>
+    <body>
+    <div class="container" ng-app="todoApp" ng-controller="mainController">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="todolist not-done">
+                    <h1>Todos</h1>
+                    <input type="text" class="form-control add-todo" placeholder="Add todo (Enter)" ng-enter="addNewTodo()">
+                    <button id="checkAll" class="btn btn-success" ng-click="markAllAsDone()">
+                        <span class="glyphicon glyphicon-ok"> </span> Mark all as done
+                    </button>
+                    <hr/>
+                    <ul id="sortable" class="list-unstyled" ng-repeat="notDoneTodo in notDoneTodos = (todos | filter:{done: false})">
+                        <li class="ui-state-default">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" ng-click="markAsDone($event)"/>
+                                    <span>{{notDoneTodo.title}}</span>
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="todo-footer">
+                        <strong><span class="count-todos"> {{notDoneTodos.length}} </span></strong> Items Left
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="todolist">
+                    <h1>Already Done</h1>
+                    <ul id="done-items" class="list-unstyled" ng-repeat="doneTodo in doneTodos = (todos | filter:{done: true})">
+                        <li>
+                            <span class="todo-title">{{doneTodo.title}}</span>
+                            <button class="remove-item btn btn-danger pull-right" ng-click="deleteTodo($event)">
+                                <span class="glyphicon glyphicon-trash"></span> Delete
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+
+</html>
+
